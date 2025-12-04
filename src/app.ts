@@ -3,16 +3,25 @@ import globalErrorHandler from "./app/middlewares/globalErrorHandler"
 import notFound from "./app/middlewares/notFound"
 import { mainRoutes } from "./app/mainRouter"
 import cors from "cors"
+import cookieParser from "cookie-parser"
+import passport from "passport"
+import expressSession from "express-session"
+import "./app/config/passport"
 
 
 const app = express()
 
 
-// Without this, req.body will always be undefined
+app.use(expressSession({
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.json())
-
-// Enable CORS so the frontend can communicate with this backend
 app.use(cors())
+app.use(cookieParser());
 
 
 // Helps maintain organized and scalable API endpoints
