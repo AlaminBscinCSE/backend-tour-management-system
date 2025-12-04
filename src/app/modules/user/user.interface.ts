@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 
 export enum Role {
     SUPER_ADMIN = "SUPER_ADMIN",
@@ -9,7 +9,7 @@ export enum Role {
 
 
 export interface IAuthProvider {
-    provider: string;  // "Google", "Credential"
+    provider: "Google" | "Credential"
     providerId: string;
 }
 
@@ -22,6 +22,7 @@ export enum IsActive {
 
 
 export interface IUser {
+    _id?:ObjectId,
     name: string;
     email: string;
     password?: string;
